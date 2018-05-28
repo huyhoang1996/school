@@ -22,10 +22,8 @@ Num  Process   Time     Time
 6               20           added
 5       1        1
 """
-result = ''
 class ProcessUnit:
     def __init__(self, arrive, exe):
-        global result
         unit_to_process = {}
         ctr = 0
         unit_number = 0
@@ -39,15 +37,14 @@ class ProcessUnit:
             ctr += 1
             if ctr > 500:     ## limit to 500 cycles
                 add_ctr = stop +1
-            result+= "\n"
-            result+="-"*60
+            print "\n", "-"*60
             ## add next unit to the dictionary ?
             if arrive[add_ctr+1] <= time_now:
                 add_ctr += 1
                 unit_to_process[add_ctr] = [ arrive[add_ctr], exe[add_ctr] ]
-                result+= ("added #", add_ctr)
+                print "added #", add_ctr
                 next_start_time = arrive[add_ctr+1]
-            result+= str(unit_to_process)
+            print unit_to_process
             ##  initialize stop time = next start time - time now
             stop_time = arrive[add_ctr+1] - time_now
 ##            print "initialize stop time", arrive[add_ctr+1], time_now
@@ -63,46 +60,34 @@ class ProcessUnit:
                    unit_number = key   # process smallest unit no matter how long the time is
             if smallest < stop_time:
                 stop_time = smallest
-            result+= ("processing next unit, stop_time")
-            result+=str(stop_time)
-            result+= "unit number"
-            result+= str(unit_number)
-            result+="\n"
+            print "processing next unit, stop_time", stop_time, "unit number", unit_number
             self.process_unit(stop_time)
             time_now += stop_time
             unit_to_process[unit_number][0] += stop_time
             unit_to_process[unit_number][1] -= stop_time
             ##  if completed, delete from dictionary
             if unit_to_process[unit_number][1] < 1:
-                result+= ("dictionary delete key")
-                result+= str(unit_number)
+                print "dictionary delete key", unit_number
                 del unit_to_process[unit_number]
         ## add last unit and process remaining in order received
-        result+= ("\n-------- processing remaining units ----------------")
+        print "\n-------- processing remaining units ----------------"
         add_ctr += 1
         unit_to_process[add_ctr] = [ arrive[add_ctr], exe[add_ctr] ]
-        convert_string = unit_to_process
-        result+= str(convert_string)
-        result+= "\n"
+        print unit_to_process, "\n"
         units = unit_to_process.keys()
         units.sort()
         for key in units:
-            result+= ("unit =", key, "  time =", unit_to_process[key][1])
+            print "unit =", key, "  time =", unit_to_process[key][1]
             self.process_unit(unit_to_process[key][1])
     def process_unit(self, time_to_process):
-        global result
-        result+= ("     ")
+        print "     ",
         for n in range(0, time_to_process):
             time.sleep(1.0)
-            result+= str(n)
+            print n,
         print
 ##===================================================================
-def process(a, b):
-    print (a, b)
-    global result
-    arrive=a
-    exe=b
-    start_time = datetime.datetime.now()
-    P = ProcessUnit(arrive, exe)
-    result+= ("\n", datetime.datetime.now() - start_time)
-    return result
+arrive=[0,3,6,7]
+exe=[12,3,11,1]
+start_time = datetime.datetime.now()
+P = ProcessUnit(arrive, exe)
+print "\n", datetime.datetime.now() - start_time
