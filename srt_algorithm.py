@@ -75,7 +75,7 @@ class ProcessUnit:
         unit_to_process[add_ctr] = [ arrive[add_ctr], exe[add_ctr] ]
         print unit_to_process, "\n"
         units = unit_to_process.keys()
-        units.sort()
+        print 'hoang', units, units.sort()
         for key in units:
             print "unit =", key, "  time =", unit_to_process[key][1]
             self.process_unit(unit_to_process[key][1])

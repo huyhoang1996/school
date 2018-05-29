@@ -39,15 +39,14 @@ class ProcessUnit:
             ctr += 1
             if ctr > 500:     ## limit to 500 cycles
                 add_ctr = stop +1
-            result+= "\n"
-            result+="-"*60
+            result+= "\n"+ "-"*60
             ## add next unit to the dictionary ?
             if arrive[add_ctr+1] <= time_now:
                 add_ctr += 1
                 unit_to_process[add_ctr] = [ arrive[add_ctr], exe[add_ctr] ]
-                result+= ("added #", add_ctr)
+                result+= "added #"+ str(add_ctr)
                 next_start_time = arrive[add_ctr+1]
-            result+= str(unit_to_process)
+            result+="\n" + str(unit_to_process)
             ##  initialize stop time = next start time - time now
             stop_time = arrive[add_ctr+1] - time_now
 ##            print "initialize stop time", arrive[add_ctr+1], time_now
@@ -63,46 +62,39 @@ class ProcessUnit:
                    unit_number = key   # process smallest unit no matter how long the time is
             if smallest < stop_time:
                 stop_time = smallest
-            result+= ("processing next unit, stop_time")
-            result+=str(stop_time)
-            result+= "unit number"
-            result+= str(unit_number)
-            result+="\n"
+            result+="\n" + "processing next unit, stop_time"+ str(stop_time)+ "unit number"+ str(unit_number)
             self.process_unit(stop_time)
             time_now += stop_time
             unit_to_process[unit_number][0] += stop_time
             unit_to_process[unit_number][1] -= stop_time
             ##  if completed, delete from dictionary
             if unit_to_process[unit_number][1] < 1:
-                result+= ("dictionary delete key")
-                result+= str(unit_number)
+                result+="\n" + "dictionary delete key"+ str(unit_number)
                 del unit_to_process[unit_number]
         ## add last unit and process remaining in order received
-        result+= ("\n-------- processing remaining units ----------------")
+        result+= "\n-------- processing remaining units ----------------"
         add_ctr += 1
         unit_to_process[add_ctr] = [ arrive[add_ctr], exe[add_ctr] ]
-        convert_string = unit_to_process
-        result+= str(convert_string)
-        result+= "\n"
+        result+=  "\n"+ str(unit_to_process)+ "\n"
         units = unit_to_process.keys()
-        units.sort()
+        sorted(units)
         for key in units:
-            result+= ("unit =", key, "  time =", unit_to_process[key][1])
+            result+="\n"+ "unit ="+ str(key)+ "  time ="+ str(unit_to_process[key][1])+"\n"
             self.process_unit(unit_to_process[key][1])
     def process_unit(self, time_to_process):
         global result
-        result+= ("     ")
+        result+= "\n"+ "     "
         for n in range(0, time_to_process):
             time.sleep(1.0)
             result+= str(n)
         print
 ##===================================================================
-def process(a, b):
-    print (a, b)
+def process(a,b):
     global result
     arrive=a
     exe=b
     start_time = datetime.datetime.now()
     P = ProcessUnit(arrive, exe)
-    result+= ("\n", datetime.datetime.now() - start_time)
+    result+= ("\n"+ str(datetime.datetime.now() - start_time))
     return result
+
