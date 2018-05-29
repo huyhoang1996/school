@@ -11,11 +11,8 @@ except socket.error:
     sys.exit()
 
 result = '' 
-data_is_exist = ''
 
 # receive a packet
-# def show_data():
-# while (datetime.now() - t1).seconds <= 5:
 count = 0
 while True:
     packet = s.recvfrom(65565)
@@ -64,13 +61,10 @@ while True:
      
     result+= '\n'+'Data : ' + str(data)
     result+='\n'
-    print (str(data))
     if len(str(data)) > 4:
-        data_is_exist += result
         count +=1
-        if count >6: break;
+        if count >5: break;
     else:
         result = ''
 
-    # return data_is_exist 
 

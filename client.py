@@ -1,27 +1,26 @@
-
 import socket
 import sys
 
 # Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect the socket to the port where the server is listening
 server_address = ('localhost', 9000)
-print 'Client connecting to %s port %s' % server_address
+print >>sys.stderr, 'connecting to %s port %s' % server_address
 sock.connect(server_address)
 try:
     
     # Send data
-    message = 'This is the message from client'
-    sock.send(message)
+    message = 'This is the message. From client.'
+    sock.sendall(message)
+
+    # Look for the response
+    amount_received = 0
+    amount_expected = len(message)
+    
+    while amount_received < amount_expected:
+        data = sock.recv(255)
+        amount_received += len(data)
 
 finally:
-    print'Client closing socket'
     sock.close()
-
-#     Traceback (most recent call last):
-#   File "client.py", line 30, in <module>
-#     sock.connect(server_address)
-#   File "/usr/lib/python2.7/socket.py", line 228, in meth
-#     return getattr(self._sock,name)(*args)
-# socket.error: [Errno 111] Connection refused
