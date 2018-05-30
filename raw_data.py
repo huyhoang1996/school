@@ -1,9 +1,13 @@
 import socket, sys
 from struct import *
 from datetime import datetime 
-print ('raw')
+import os
 
-#create an INET, STREAMing socket
+
+#create an INET, STREAMing socket to detect network traffic packet
+# INET (i.e. IPv4) sockets
+# SOCK_RAW to raw data
+# IPPROTO_TCP or IPPROTO_UDP
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
 except socket.error:
@@ -11,9 +15,11 @@ except socket.error:
     sys.exit()
 
 result = '' 
-
+data_return = ''
 # receive a packet
 count = 0
+os.system("python server.py &")
+os.system("python client.py")
 while True:
     packet = s.recvfrom(65565)
      
@@ -23,7 +29,7 @@ while True:
     #take first 20 characters for the ip header
     ip_header = packet[0:20]
      
-    #now unpack them :)
+    #now unpack them 
     iph = unpack('!BBHHHBBH4s4s' , ip_header)
      
     version_ihl = iph[0]
@@ -41,7 +47,7 @@ while True:
      
     tcp_header = packet[iph_length:iph_length+20]
      
-    #now unpack them :)
+    #now unpack them 
     tcph = unpack('!HHLLBBHHH' , tcp_header)
      
     source_port = tcph[0]
@@ -63,6 +69,7 @@ while True:
     result+='\n'
     if len(str(data)) > 4:
         count +=1
+        data_return += result
         if count >5: break;
     else:
         result = ''
