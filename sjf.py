@@ -1,6 +1,6 @@
 
 def process(n , list_n):
-	result = ''
+	result = 'SJF algorithm'
 	bt=[]     #bt stands for burst time
 	n=n
 	processes=[]

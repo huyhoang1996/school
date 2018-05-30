@@ -22,7 +22,7 @@ Num  Process   Time     Time
 6               20           added
 5       1        1
 """
-result = ''
+result = 'SRT algorithm'
 class ProcessUnit:
     def __init__(self, arrive, exe):
         global result
@@ -57,7 +57,7 @@ class ProcessUnit:
             smallest = 99999
             for key in unit_to_process:
 ##               print "time remaining", unit_to_process[key][1], stop_time
-               if unit_to_process[key][1] < smallest:
+                if unit_to_process[key][1] < smallest:
                    smallest = unit_to_process[key][1]
                    unit_number = key   # process smallest unit no matter how long the time is
             if smallest < stop_time:
