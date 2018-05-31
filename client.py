@@ -10,16 +10,12 @@ sock.connect(server_address)
 try:
     
     # Send data
-    message = 'This is the message. From client.'
+    data = sys.argv[1:]
+    message = ''
+    for item in data:
+        message += str(' ' + item)
     sock.sendall(message)
-    
-    count = 0
-    while count <2:
-        count+=1
-        data = sock.recv(255)
-        if len(data)>10:
-            data = ''
-            sock.sendall(message)
+
 
 finally:
     sock.close()

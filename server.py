@@ -9,7 +9,6 @@ print ('starting up on %s port %s' % server_address)
 sock.bind(server_address)
 # Listen for incoming connections
 sock.listen(1)
-count =0
 while True:
     # Wait for a connection
     connection, client_address = sock.accept()
@@ -19,14 +18,12 @@ while True:
         while True:
             data = connection.recv(255)
             print ('received "%s"' % data)
-            if data:
-                count +=1
-                connection.sendall("This is the message. From server. %s" % count)
-            else:
+            if not data:
                 break
             
     finally:
         # Clean up the connection
+        print("close server")
         connection.close()
 
 
