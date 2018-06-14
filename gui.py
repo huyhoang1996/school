@@ -18,6 +18,7 @@ def clicked():
 	if list_arrive.get():
 		list_arrive_convert = [int(x) for x in list_arrive.get().split(',')]
 	total_pro = int(total.get())
+	print (total_pro)
 	if selection == 1:
 		txt.insert(INSERT, fifo.process(total_pro , list_time))
 	if selection == 2:

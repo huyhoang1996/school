@@ -7,7 +7,7 @@ def process(n , list_n):
 	for i in range(0,n):
 	 	processes.insert(i,i+1)
 	bt=list_n
-	for i in range(0,len(bt)-1):  #applying bubble sort to sort process according to their burst time
+	for i in range(0,len(bt)-1): 
 		for j in range(0,len(bt)-i-1):
 			if(bt[j]>bt[j+1]):
 				temp=bt[j]
@@ -16,10 +16,10 @@ def process(n , list_n):
 				temp=processes[j]
 				processes[j]=processes[j+1]
 				processes[j+1]=temp
-	wt=[]    #wt stands for waiting time
-	avgwt=0  #average of waiting time
-	tat=[]    #tat stands for turnaround time
-	avgtat=0   #average of total turnaround time
+	wt=[]    
+	avgwt=0  
+	tat=[]    
+	avgtat=0   
 	wt.insert(0,0)
 	tat.insert(0,bt[0])
 	for i in range(1,len(bt)):  
@@ -27,6 +27,7 @@ def process(n , list_n):
 		tat.insert(i,wt[i]+bt[i])
 		avgwt+=wt[i]
 		avgtat+=tat[i]
+	avgtat += bt[0]
 	avgwt=float(avgwt)/n
 	avgtat=float(avgtat)/n
 	result +=("\n")
