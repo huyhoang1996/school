@@ -1,0 +1,9 @@
+9	NGuyễn hà huy hoàng	14T3	huyhoang1996ha@gmail.com	
+chủ đề mô phỏng, đề tài 1 
+Viết chương trình mô phỏng các giải thuật định thời đã học: FIFO, SJF, SRT,
+RR, HRRN, MLFQ. Đầu vào của giải thuật: số quá trình, độ dài các CPU burst, I/O
+burst... được tạo ngẫu nhiên.
+"
+Chủ đề 1 : Lập trình bằng TCP/UDP
+14. Viết chương trình Client/Server hoạt động theo giao thức TCP hoặc
+UDP. Server hiển thị cấu trúc thông tin của gói tin nhận được từ Client"																						
